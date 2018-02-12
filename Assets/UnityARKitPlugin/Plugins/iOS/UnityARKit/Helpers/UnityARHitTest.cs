@@ -7,11 +7,14 @@ namespace UnityEngine.XR.iOS
 {
 	public class UnityARHitTest : MonoBehaviour
 	{
-		public Transform m_levelTransform;
+		public Transform m_levelParentTransform;
 		public float maxRayDistance = 30.0f;
 		public LayerMask collisionLayer = 1 << 10;  //ARKitPlane layer
         public Button stopDetectionButton;
         public GameObject bird;
+
+        // used to display the level when we placed its parent correctly on an ARKITPLANE
+        public GameObject Level { get; set; }
 
         private bool isDetecting;
 
@@ -21,14 +24,17 @@ namespace UnityEngine.XR.iOS
             if (hitResults.Count > 0) {
                 foreach (var hitResult in hitResults) {
                     Debug.Log ("Got hit!");
-                    m_levelTransform.position = UnityARMatrixOps.GetPosition (hitResult.worldTransform);
-                    m_levelTransform.rotation = UnityARMatrixOps.GetRotation (hitResult.worldTransform);
-                    Debug.Log (string.Format ("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_levelTransform.position.x, m_levelTransform.position.y, m_levelTransform.position.z));
+                    m_levelParentTransform.position = UnityARMatrixOps.GetPosition (hitResult.worldTransform);
+                    m_levelParentTransform.rotation = UnityARMatrixOps.GetRotation (hitResult.worldTransform);
+                    Debug.Log (string.Format ("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_levelParentTransform.position.x, m_levelParentTransform.position.y, m_levelParentTransform.position.z));
                     stopDetectionButton.gameObject.SetActive(true);
+                    Level.SetActive(true);
                     return true;
                 }
             }
             stopDetectionButton.gameObject.SetActive(false);
+            Level.SetActive(false);
+
             return false;
         }
 
@@ -76,18 +82,23 @@ namespace UnityEngine.XR.iOS
                     {
                         stopDetectionButton.gameObject.SetActive(true);
     					//we're going to get the position from the contact point
-                        m_levelTransform.position = hit.point;
-            Debug.Log (string.Format ("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_levelTransform.position.x, m_levelTransform.position.y, m_levelTransform.position.z));
+                        m_levelParentTransform.position = hit.point;
+                        Debug.Log (string.Format ("x:{0:0.######} y:{1:0.######} z:{2:0.######}", m_levelParentTransform.position.x, m_levelParentTransform.position.y, m_levelParentTransform.position.z));
 
     					//and the rotation from the transform of the plane collider
-                        m_levelTransform.rotation = hit.transform.rotation;
+                        m_levelParentTransform.rotation = hit.transform.rotation;
+                        Level.SetActive(true);
     				}
                     else
+                    {
                         stopDetectionButton.gameObject.SetActive(false);
+                        Level.SetActive(false);
+                    }
+                        
                 }
 			}
 			#else
-            if (Input.touchCount > 0 && m_levelTransform != null)
+            if (Input.touchCount > 0 && m_levelParentTransform != null)
 			{
 				var touch = Input.GetTouch(0);
                 if ((touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved) && isDetecting == true && !isPointerOverUIObject())

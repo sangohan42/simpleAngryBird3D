@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//This script works with its ball. Inter alia it sends an events to any listeners about its actions like thorowed, goaled, failed.
 public class BirdControl : MonoBehaviour 
 {
 	public Material standardMaterial, fadeMaterial;
@@ -9,15 +8,13 @@ public class BirdControl : MonoBehaviour
     public bool thrown, failed, success, clear;
 	private Color col;
 	private float distance;
-	[HideInInspector]
-	public float maxHeight;
 	public GameObject stage;
 	[HideInInspector]
 	public AudioSource audioSource;
 	private Rigidbody thisRigidbody;
 	
 	public delegate void ThrowAction();
-	public delegate void EnemyKilledAction(float distance, int enemyPointValue = 10);
+	public delegate void EnemyKilledAction( float distance );
 	public delegate void FailAction();
     public static event ThrowAction OnThrow;
     public static event EnemyKilledAction OnEnemyKilled;
@@ -42,17 +39,6 @@ public class BirdControl : MonoBehaviour
 			print("failed, not touched enemy");
 			SetFailed();
 		}
-
-		if(transform.position.y/2 > maxHeight)
-		{
-			maxHeight = transform.position.y/2;
-		}
-	}
-	
-	void OnEnable()
-	{
-		distance = (transform.position - stage.transform.position).magnitude;
-		maxHeight = transform.position.y;
 	}
 	
 	public void ResetBird()
@@ -69,7 +55,7 @@ public class BirdControl : MonoBehaviour
 		thrown = true;
 		if(OnThrow != null)
 			OnThrow();
-
+        distance = (transform.position - stage.transform.position).magnitude;
         SoundController.Instance.playThrowBird();
 	}
 	
@@ -93,6 +79,7 @@ public class BirdControl : MonoBehaviour
         }
     }
 	
+    // No Dead zone yet so useless for now
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.tag == "deadZone") 
 		{

@@ -9,13 +9,6 @@ public class ThrowControl : MonoBehaviour
 	public float lerpTimeFactorOnTouch = 7f;
 	public float cameraNearClipPlaneFactor = 2.5f;
 
-	public bool isThrowBackAvailable = false;
-
-	// if (isFullPathThrow == false)
-	// sensivity = new Vector2(100f, 100f);
-	// speed = 45f;
-	public bool isFullPathThrow = true;
-
 	private Vector3 direction;
 
 	private Vector3 inputPositionCurrent;
@@ -78,32 +71,18 @@ public class ThrowControl : MonoBehaviour
 					isHolding = true;
 					transform.SetParent (null);
 
-					if(isFullPathThrow)
-					{
-						inputPositionPivot = inputPositionCurrent;
-					}
+					inputPositionPivot = inputPositionCurrent;
 				}
 			}
 		}
 
 		if(isInputEnded)
 		{
-			if (isThrowBackAvailable) 
-			{
+
+			if(inputPositionPivot.y < inputPositionCurrent.y)
+			{ 
 				Throw (inputPositionCurrent);
 			}
-			else
-			{
-				if(inputPositionPivot.y < inputPositionCurrent.y)
-				{ 
-					Throw (inputPositionCurrent);
-				}
-			}
-		}
-
-		if(isInputLast && !isFullPathThrow) 
-		{
-			inputPositionPivot = inputPositionCurrent;
 		}
 	}
 

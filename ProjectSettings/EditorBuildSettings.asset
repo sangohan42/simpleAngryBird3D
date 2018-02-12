@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/AR Basketball GO/Scenes/AR_Basketball_GO.unity
-    guid: 6dfbdd14c86c945718536f0217672a86
   - enabled: 1
-    path: Assets/UnityARKitPlugin/Examples/UnityARKitScene/UnityARKitScene.unity
+    path: Assets/Scenes/Main.unity
     guid: c159f2591a9b5c843b0a0442451f78f8

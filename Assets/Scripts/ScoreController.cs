@@ -4,11 +4,12 @@ using System.Collections;
 
 [RequireComponent (typeof (GameController))]
 public class ScoreController : MonoBehaviour 
-{	
-    public int startBirdsCount = 5;				//Birds count we start with (decrease only when we fail to destroy an enemy)
-	public int enemyToKillForVictory = 3;
+{
+    private int startBirdsCount;				//Birds count we start with (decrease only when we fail to destroy an enemy)
+	private int enemyToKillForVictory;
+    private int enemyPointValue;
 	private int currentEnemyKilledCount = 0;
-	private int xpScoreStep = 100;					//XP step. With help of this you can tweak the speed of getting xp level.
+	//private int xpScoreStep = 100;					//XP step. With help of this you can tweak the speed of getting xp level.
 
 	public Text birdsLeft;
     public Text remainingEnemyToKill;
@@ -35,16 +36,23 @@ public class ScoreController : MonoBehaviour
 	
 	void Start()
 	{
-		currentBirdsCount = startBirdsCount;
-		ResetData();
 	}
 	
-    void EnemyKilled( float fromDistance, int enemyPointValue = 10 )
+    public void SetStartValues(LevelSettings levelSettings)
+    {
+        //Debug.Log("SetStartValues");
+        startBirdsCount = levelSettings.availableBirdsNumber;
+        enemyToKillForVictory = levelSettings.enemyNumber;
+        enemyPointValue = levelSettings.enemyPointValue;
+        ResetData();
+    }
+
+    void EnemyKilled( float fromDistance )
 	{
         currentEnemyKilledCount++;
         remainingEnemyToKill.text = (enemyToKillForVictory - currentEnemyKilledCount).ToString();
 		
-        int scoreToAdd = (int)fromDistance * enemyPointValue;
+        int scoreToAdd = Mathf.RoundToInt(fromDistance * enemyPointValue);
         plusScoreTxt.gameObject.SetActive(true);
         plusScoreTxt.text = "+" + scoreToAdd.ToString("F0");
         AddScore(scoreToAdd);
@@ -54,7 +62,7 @@ public class ScoreController : MonoBehaviour
 	
 	void Fail()
 	{
-        Debug.Log("FAIL");
+        //Debug.Log("FAIL");
         currentBirdsCount -= 1;
 			
 		CheckGameState();

@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class SoundController : MonoBehaviour {
-	
-	public AudioClip birdThrow;
-	public AudioClip newRecord;
-	public AudioClip gameOver;
+[RequireComponent(typeof(AudioSource))]
+public class SoundController : MonoBehaviour
+{
+    [SerializeField] private AudioClip birdThrow;
+    [SerializeField] private AudioClip newRecord;
+    [SerializeField] private AudioClip gameComplete;
     public static SoundController Instance { get; private set; }
-	private AudioSource thisAudio;
-	
-    void Awake()
+    private AudioSource audioSource;
+
+    private void Awake()
     {
         // Check if there are any other instances conflicting
         if (Instance != null && Instance != this)
@@ -21,29 +21,23 @@ public class SoundController : MonoBehaviour {
         Instance = this;
     }
 
-	void Start () {
-		thisAudio = GetComponent<AudioSource>();
-	}
-	
-	public void Stop(){
-		if(thisAudio.isPlaying) {
-			thisAudio.Stop();
-			thisAudio.clip = null;
-			thisAudio.loop = false;
-		}
-	}
-	
-    public void playThrowBird()
+    private void Start()
     {
-        thisAudio.PlayOneShot(birdThrow);
+        audioSource = GetComponent<AudioSource>();
     }
 
-	public void playNewRecord(){
-		thisAudio.PlayOneShot(newRecord);
-	}
-	
-	public void playGameOver(){
-		thisAudio.PlayOneShot(gameOver);
-	}
-	
+    public void PlayThrowBird()
+    {
+        audioSource.PlayOneShot(birdThrow);
+    }
+
+    public void PlayNewRecord()
+    {
+        audioSource.PlayOneShot(newRecord);
+    }
+
+    public void PlayGameComplete()
+    {
+        audioSource.PlayOneShot(gameComplete);
+    }
 }

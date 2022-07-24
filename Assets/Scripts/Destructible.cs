@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class Destructible : MonoBehaviour {
+public class Destructible : MonoBehaviour
+{
+    [SerializeField] private GameObject destroyedVersion; // Reference to the shattered version of the object
 
-	public GameObject destroyedVersion;	// Reference to the shattered version of the object
-
-    void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision other)
     {
         switch (other.gameObject.tag)
         {
@@ -15,6 +15,5 @@ public class Destructible : MonoBehaviour {
                 Destroy(gameObject);
                 break;
         }
-	}
-
+    }
 }

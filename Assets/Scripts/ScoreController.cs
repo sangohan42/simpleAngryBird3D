@@ -1,118 +1,112 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
-[RequireComponent (typeof (GameController))]
-public class ScoreController : MonoBehaviour 
+public class ScoreController : MonoBehaviour
 {
-    private int startBirdsCount;				//Birds count we start with (decrease only when we fail to destroy an enemy)
-	private int enemyToKillForVictory;
+    private int enemyToKillForVictory;
     private int enemyPointValue;
-	private int currentEnemyKilledCount = 0;
-	//private int xpScoreStep = 100;					//XP step. With help of this you can tweak the speed of getting xp level.
+    private int killedEnemyCount = 0;
 
-	public Text birdsLeft;
-    public Text remainingEnemyToKill;
-	public Text plusScoreTxt;
-	public Text plusBallTxt;
-	
-	private int currentBirdsCount;					
-	private int score;								//Current score
-	private int lastRecord;							//Int that keeps current best score 
-	private bool hitRecord;							//Boolean that defines if we already hitted last best score or not
-	
-	
-	void OnEnable()
-	{
-        BirdControl.OnEnemyKilled += EnemyKilled;
-        BirdControl.OnFail += Fail;
-	}
-	
-	void OnDisable()
-	{
-        BirdControl.OnEnemyKilled -= EnemyKilled;
-        BirdControl.OnFail -= Fail;
-	}
-	
-	void Start()
-	{
-	}
-	
-    public void SetStartValues(LevelSettings levelSettings)
+    [SerializeField] private Text birdsLeft;
+    [SerializeField] private Text remainingEnemyToKill;
+    [SerializeField] private Text plusScoreTxt;
+
+    private int remainingBirdsCount;
+    private int score; //Current score
+    private int lastRecord; //Int that keeps current best score 
+    private bool hitRecord; //Boolean that defines if we already hit last best score or not
+
+    [SerializeField] private LevelController levelController;
+    [SerializeField] private BirdThrower birdThrower;
+    [SerializeField] private SoundController soundController;
+
+    public event Action OnVictory;
+    public event Action OnGameOver;
+
+    private void OnEnable()
     {
-        //Debug.Log("SetStartValues");
-        startBirdsCount = levelSettings.availableBirdsNumber;
-        enemyToKillForVictory = levelSettings.enemyNumber;
-        enemyPointValue = levelSettings.enemyPointValue;
-        ResetData();
+        Bird.OnEnemyKilled += OnEnemyKilled;
+        BirdThrower.OnFail += OnFailToKillEnemy;
+        levelController.OnLevelInstantiated += OnLevelInstantiated;
     }
 
-    void EnemyKilled( float fromDistance )
-	{
-        currentEnemyKilledCount++;
-        remainingEnemyToKill.text = (enemyToKillForVictory - currentEnemyKilledCount).ToString();
-		
-        int scoreToAdd = Mathf.RoundToInt(fromDistance * enemyPointValue);
+    private void OnDisable()
+    {
+        Bird.OnEnemyKilled -= OnEnemyKilled;
+        BirdThrower.OnFail -= OnFailToKillEnemy;
+        levelController.OnLevelInstantiated -= OnLevelInstantiated;
+    }
+
+    private void OnLevelInstantiated(LevelSettings levelSettings)
+    {
+        remainingBirdsCount = levelSettings.availableBirdsNumber;
+        enemyToKillForVictory = levelSettings.enemyNumber;
+        enemyPointValue = levelSettings.enemyPointValue;
+
+        score = 0;
+        birdsLeft.text = remainingBirdsCount.ToString();
+        remainingEnemyToKill.text = enemyToKillForVictory.ToString();
+        lastRecord = PlayerPrefs.GetInt("arcadeBestScore", 0);
+    }
+
+    private void OnEnemyKilled()
+    {
+        killedEnemyCount++;
+        remainingEnemyToKill.text = (enemyToKillForVictory - killedEnemyCount).ToString();
+
+        int scoreToAdd = Mathf.RoundToInt(birdThrower.ThrowingDistance * enemyPointValue);
         plusScoreTxt.gameObject.SetActive(true);
         plusScoreTxt.text = "+" + scoreToAdd.ToString("F0");
+
         AddScore(scoreToAdd);
 
         CheckGameState();
-	}
-	
-	void Fail()
-	{
-        //Debug.Log("FAIL");
-        currentBirdsCount -= 1;
-			
-		CheckGameState();
-	}
+    }
 
-    void CheckGameState()
+    private void OnFailToKillEnemy()
     {
-        birdsLeft.text = currentBirdsCount.ToString();
+        //Debug.Log("FAIL");
+        remainingBirdsCount -= 1;
+
+        CheckGameState();
+    }
+
+    private void CheckGameState()
+    {
+        birdsLeft.text = remainingBirdsCount.ToString();
 
         //-----------------------
         // Victory or Game Over
         //-----------------------
 
-        if (currentEnemyKilledCount >= enemyToKillForVictory)
+        if (killedEnemyCount >= enemyToKillForVictory)
         {
-            GameController.Instance.Victory();
+            OnVictory?.Invoke();
         }
-        else if (currentBirdsCount < 1)
+        else if (remainingBirdsCount == 0)
         {
-            GameController.Instance.GameOver();
+            OnGameOver?.Invoke();
         }
     }
-	
-	public void AddScore(int score) 
-	{
-		this.score += score;
 
-		if(this.score > PlayerPrefs.GetInt("arcadeBestScore",0))
-		{
-			PlayerPrefs.SetInt("arcadeBestScore",this.score);
-			if(lastRecord > 0 && !hitRecord) 
-			{
-				HitNewRecord();
-			}
-		}
-	}
-	
-	public void HitNewRecord()
-	{
-        SoundController.Instance.playNewRecord();
-		hitRecord = true;
-	}
-	
-	public void ResetData()
-	{
-		score = 0;
-		currentBirdsCount = startBirdsCount;
-		birdsLeft.text = currentBirdsCount.ToString();
-        remainingEnemyToKill.text = enemyToKillForVictory.ToString();
-		lastRecord = PlayerPrefs.GetInt("arcadeBestScore",0);
-	}
+    private void AddScore(int score)
+    {
+        this.score += score;
 
+        if (this.score > PlayerPrefs.GetInt("arcadeBestScore", 0))
+        {
+            PlayerPrefs.SetInt("arcadeBestScore", this.score);
+            if (lastRecord > 0 && !hitRecord)
+            {
+                HitNewRecord();
+            }
+        }
+    }
+
+    private void HitNewRecord()
+    {
+        soundController.PlayNewRecord();
+        hitRecord = true;
+    }
 }

@@ -1,0 +1,157 @@
+Using pre-set license
+Built from 'master' branch; Version is '2020.3.36f1 (71f96b79b9f0) revision 7469419'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 11  (10.0.22000) 64bit Professional' Language: 'en' Physical Memory: 32452 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.3.36f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/CONTAMINE/Documents/UnityProjects/AngryBirds
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+63874
+Successfully changed project path to: C:/Users/CONTAMINE/Documents/UnityProjects/AngryBirds
+C:/Users/CONTAMINE/Documents/UnityProjects/AngryBirds
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 29.68 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.36f1 (71f96b79b9f0)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.36f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/CONTAMINE/Documents/UnityProjects/AngryBirds/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3080 Ti Laptop GPU (ID=0x2460)
+    Vendor:   
+    VRAM:     16200 MB
+    Driver:   30.0.15.1169
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.36f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.36f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.36f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56376
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.36f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.000809 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 24.59 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.378 seconds
+Domain Reload Profiling:
+	ReloadAssembly (378ms)
+		BeginReloadAssembly (37ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (297ms)
+			LoadAssemblies (37ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (96ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (18ms)
+			SetupLoadedEditorAssemblies (106ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (3ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (25ms)
+				BeforeProcessingInitializeOnLoad (8ms)
+				ProcessInitializeOnLoadAttributes (52ms)
+				ProcessInitializeOnLoadMethodAttributes (18ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.001310 seconds.
+Begin MonoManager ReloadAssembly
+Error: Could not load signature of UnityEditor.XR.ARKit.XcodeAssetCatalog:WriteAndAddToPBXProject due to: Could not load file or assembly 'UnityEditor.iOS.Extensions.Xcode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies. assembly:UnityEditor.iOS.Extensions.Xcode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null type:<unknown type> member:(null) signature:<none>
+Unloading broken assembly Library/ScriptAssemblies/Unity.XR.ARKit.Editor.dll, this assembly can cause crashes in the runtime
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 23.81 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.630 seconds
+Domain Reload Profiling:
+	ReloadAssembly (630ms)
+		BeginReloadAssembly (81ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (2ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (12ms)
+		EndReloadAssembly (515ms)
+			LoadAssemblies (51ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (155ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (25ms)
+			SetupLoadedEditorAssemblies (225ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (2ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (24ms)
+				BeforeProcessingInitializeOnLoad (49ms)
+				ProcessInitializeOnLoadAttributes (140ms)
+				ProcessInitializeOnLoadMethodAttributes (7ms)
+				AfterProcessingInitializeOnLoad (2ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (1ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.02 seconds
+Refreshing native plugins compatible for Editor in 0.32 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2152 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 91.3 MB.
+System memory in use after: 91.4 MB.
+
+Unloading 20 unused Assets to reduce memory usage. Loaded Objects now: 2598.
+Total: 2.221700 ms (FindLiveObjects: 0.091400 ms CreateObjectMapping: 0.031700 ms MarkObjects: 2.045800 ms  DeleteObjects: 0.052000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  path: Assets/Textures/aim_icon.png
+  artifactKey: Guid(d9149c89ed03348ba91c6147d8d75ae5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Textures/aim_icon.png using Guid(d9149c89ed03348ba91c6147d8d75ae5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '31cea9c1cafd8751bc15ef5afbd55d24') in 0.067098 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 10.703077 seconds.
+  path: Assets/Icons/gameIcon.png
+  artifactKey: Guid(f944c144d3fcd41e89ebef78c712fc01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Icons/gameIcon.png using Guid(f944c144d3fcd41e89ebef78c712fc01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '44321ba622c6a8cd1fe7585c61d5bff1') in 0.029767 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 206.186437 seconds.
+  path: Assets/Icons/gameIcon.png
+  artifactKey: Guid(f944c144d3fcd41e89ebef78c712fc01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Icons/gameIcon.png using Guid(f944c144d3fcd41e89ebef78c712fc01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '666c3b212ba1e647885db12bdaaa2678') in 0.026449 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2898.510853 seconds.
+  path: Assets/Scripts/PlaceOnARPlane.cs
+  artifactKey: Guid(5892b683d52b4c044b6b13d4c4b59723) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/PlaceOnARPlane.cs using Guid(5892b683d52b4c044b6b13d4c4b59723) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a4bd5fd67808207d5bfa7d06e0d65d64') in 0.008787 seconds 

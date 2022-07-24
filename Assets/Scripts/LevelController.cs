@@ -1,36 +1,46 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using UnityEngine.XR.iOS;
 
-public class LevelController : MonoBehaviour {
+[RequireComponent(typeof(PlaceOnARPlane))]
+public class LevelController : MonoBehaviour
+{
+    public static LevelController Instance { get; private set; }
 
-    public List<LevelSettings> levels = new List<LevelSettings>();
-    public Transform levelParent;
-    public ScoreController scoreController;
-    public UnityARHitTest HitTest;
+    private RandomLevelInstantiator randomLevelInstantiator;
+    private PlaceOnARPlane placeOnARPlane;
 
-    private GameObject currentLevelGO;
+    public Action<LevelSettings> OnLevelInstantiated { get; set; }
 
-    // Choose the level randomly (currently only one level so..)
-	public void SelectAndInstantiateRandomLevel()
+    public GameObject CurrentLevelGO { get; private set; }
+
+    private void Awake()
     {
-        int randomLevelIndex = Random.Range(0, levels.Count);
-        LevelSettings selectedLevel = levels[randomLevelIndex];
-        currentLevelGO = Instantiate(selectedLevel.levelPrefab, new Vector3(0,0.08f,0), Quaternion.identity) as GameObject;
-        currentLevelGO.transform.SetParent(levelParent);
-        currentLevelGO.SetActive(false);
+        // Check if there are any other instances conflicting
+        if (Instance != null && Instance != this)
+        {
+            // If that is the case, destroy other instances
+            Destroy(gameObject);
+        }
 
-        // Give the GO to the HitTest script
-        HitTest.Level = currentLevelGO;
+        Instance = this;
 
-        // Set displayed values
-        scoreController.SetStartValues(selectedLevel);
+        randomLevelInstantiator = new RandomLevelInstantiator();
+        placeOnARPlane = GetComponent<PlaceOnARPlane>();
     }
 
-    // not really necessary because in this game I reset the scene so everything is already clean up for me
-    public void DestroyLevel()
+    public void InstantiateRandomLevel()
     {
-        Destroy(currentLevelGO);
+        if (CurrentLevelGO != null)
+            Destroy(CurrentLevelGO);
+
+        var (levelGO, levelSettings) = randomLevelInstantiator.Instantiate(new Vector3(0, 0.08f, 0), Quaternion.identity);
+        levelGO.SetActive(false);
+
+        placeOnARPlane.ObjectToPlace = levelGO;
+        placeOnARPlane.enabled = true;
+        
+        CurrentLevelGO = levelGO;
+
+        OnLevelInstantiated?.Invoke(levelSettings);
     }
 }
